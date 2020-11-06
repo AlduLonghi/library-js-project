@@ -12,10 +12,11 @@
            <th>Author</th>
            <th>Pages</th>
            <th>Read?</th>
+           <th>Delete</th>
        </tr>
     </table>
     
-    <form id="new-book-form">
+    <form id="new-book-form" >
         <label for="title">Book Title</label>
         <input type="text" id="title"><br>
         <label for="author">Author</label>
@@ -23,10 +24,9 @@
         <label for="pageNum">Number of pages</label>
         <input type="text" id="pageNum"><br>
         <input type="radio" id="haveRead" name="haveRead" value="true">Have read<br>
- 
-        <input type="radio" id="notRead" name="notRead" value="false">Haven't read<br>
+        <input type="radio" id="notRead" name="haveRead" value="false" checked>Haven't read<br>
 
-        <button id="new-book-btn">Create a new book</button>
+        <button id="new-book-btn" type="button">Create a new book</button>
     </form>
 
 <script src="main.js"></script>
