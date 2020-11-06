@@ -15,14 +15,14 @@ function addBookToLibrary() {
 
 
 function displayBooks(books) {
-  var bookCard = document.querySelector('#books-table')
-  for (let book in books) {
+  let bookCard = document.querySelector('#books-table')
+  for (let i = 0; i < books.length; i++) {
+    let bookKeys = Object.keys(books[i]);
+    let book = books[i];
     let tableRow = document.createElement('tr');
-    let bookKeys = Object.values(books[book]);
-    console.log(bookKeys);
-    for (let key in bookKeys) {
+    for (let i = 0; i < bookKeys.length; i++) {
       let bookTitle = document.createElement('td');
-      let bookTitleContent = document.createTextNode(bookKeys[key]);
+      let bookTitleContent = document.createTextNode(book[bookKeys[i]]);
       bookTitle.appendChild(bookTitleContent);
       tableRow.appendChild(bookTitle);
     } 
