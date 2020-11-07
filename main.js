@@ -81,3 +81,14 @@ function addBookToLibrary() {
 const newBookBtn = document.querySelector('#new-book-btn');
 
 newBookBtn.onclick = () => { addBookToLibrary(); };
+
+const newBookForm = document.getElementById('new-book-form');
+const displayFormBtn = document.getElementById('display-form-btn');
+
+displayFormBtn.onclick = () => {
+  if (newBookForm.style.display === 'block') {
+    newBookForm.style.display = 'none';
+  } else {
+    newBookForm.style.display = 'block';
+  }
+};
