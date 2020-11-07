@@ -10,10 +10,9 @@ function Book(title, author, pagesNum, read) {
 function deleteBook(index) {
   const nodeToDelete = document.getElementById(index);
   nodeToDelete.remove();
-  myLibrary.splice(index, 1);
 }
 
-Book.prototype.changeBookStatus = function(index) {
+Book.prototype.changeBookStatus = function status(index) {
   const bookStatus = myLibrary[index].read;
   const bookStatusToChange = document.getElementById(`status-${index}`);
 
@@ -27,7 +26,6 @@ Book.prototype.changeBookStatus = function(index) {
 };
 
 function displayBooks(books) {
-  
   const index = books.length - 1;
   const book = books[index];
   const bookCard = document.querySelector('#books-table');
@@ -79,20 +77,6 @@ function addBookToLibrary() {
   displayBooks(myLibrary);
 }
 
-// function changeBookStatus() {
-//   let bookStatus = myLibrary[index].read;
-
-//   const bookStatusToChange = document.getElementById(`status-${index}`);
-
-
-//   if(bookStatus) {
-//     myLibrary[index].read = false;
-//     bookStatusToChange.textContent = false;
-//   } else {
-//     myLibrary[index].read = true;
-//     bookStatusToChange.textContent = true;
-//   }
-// }
 
 const newBookBtn = document.querySelector('#new-book-btn');
 
