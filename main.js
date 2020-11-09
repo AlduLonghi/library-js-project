@@ -9,7 +9,6 @@ function Book(title, author, pagesNum, read) {
 
 function deleteBook(index) {
   myLibrary.splice(index, 1);
-  displayBooks();
 }
 
 Book.prototype.changeBookStatus = function status() {
@@ -18,46 +17,50 @@ Book.prototype.changeBookStatus = function status() {
   } else {
     this.read = true;
   }
-  displayBooks();
 };
 
 function displayBooks() {
   const allBookNodes = document.querySelectorAll('.book-row');
-  
+
   allBookNodes.forEach((node) => {
     node.remove();
-  })
+  });
 
   const bookCard = document.querySelector('#books-table');
 
-  for(let book of myLibrary) {  
-    const bookKeys = Object.keys(book);
+  for (let i = 0; i < myLibrary.length; i += 1) {
+    const bookKeys = Object.keys(myLibrary[i]);
     const tableRow = document.createElement('tr');
     tableRow.classList = 'book-row';
     for (let j = 0; j < bookKeys.length - 1; j += 1) {
       const bookProperty = document.createElement('td');
-      const bookPropertyContent = document.createTextNode(book[bookKeys[j]]);
+      const bookPropertyContent = document.createTextNode(myLibrary[i][bookKeys[j]]);
       bookProperty.appendChild(bookPropertyContent);
       tableRow.appendChild(bookProperty);
     }
-    const bookIndex = myLibrary.indexOf(book)
     const bookStatus = document.createElement('td');
     const statusBtn = document.createElement('button');
-    const statusBtnContent = document.createTextNode(book.read);
+    const statusBtnContent = document.createTextNode(myLibrary[i].read);
     statusBtn.appendChild(statusBtnContent);
     bookStatus.appendChild(statusBtn);
     tableRow.appendChild(bookStatus);
-    statusBtn.id = `status-${bookIndex}`;
-    statusBtn.onclick = () => { book.changeBookStatus(); };
+    statusBtn.id = `status-${i}`;
+    statusBtn.onclick = () => {
+      myLibrary[i].changeBookStatus();
+      displayBooks();
+    };
 
     const deleteTd = document.createElement('td');
     const deleteBtn = document.createElement('button');
     deleteBtn.type = 'button';
     deleteBtn.textContent = 'delete book';
-    deleteBtn.onclick = () => { deleteBook(bookIndex); };
+    deleteBtn.onclick = () => {
+      deleteBook(i);
+      displayBooks();
+    };
     deleteTd.appendChild(deleteBtn);
     tableRow.appendChild(deleteTd);
-    tableRow.id = bookIndex;
+    tableRow.id = i;
     bookCard.appendChild(tableRow);
   }
 }
