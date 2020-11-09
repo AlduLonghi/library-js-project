@@ -8,57 +8,58 @@ function Book(title, author, pagesNum, read) {
 }
 
 function deleteBook(index) {
-  const nodeToDelete = document.getElementById(index);
-  nodeToDelete.remove();
+  myLibrary.splice(index, 1);
+  displayBooks();
 }
 
-Book.prototype.changeBookStatus = function status(index) {
-  const bookStatus = myLibrary[index].read;
-  const bookStatusToChange = document.getElementById(`status-${index}`);
-
-  if (bookStatus) {
+Book.prototype.changeBookStatus = function status() {
+  if (this.read) {
     this.read = false;
-    bookStatusToChange.textContent = false;
   } else {
     this.read = true;
-    bookStatusToChange.textContent = true;
   }
+  displayBooks();
 };
 
-function displayBooks(books) {
-  const index = books.length - 1;
-  const book = books[index];
+function displayBooks() {
+  const allBookNodes = document.querySelectorAll('.book-row');
+  
+  allBookNodes.forEach((node) => {
+    node.remove();
+  })
+
   const bookCard = document.querySelector('#books-table');
 
-  const bookKeys = Object.keys(book);
-  const tableRow = document.createElement('tr');
-  for (let j = 0; j < bookKeys.length; j += 1) {
-    if (j === 3) {
-      const bookTitle = document.createElement('td');
-      const statusBtn = document.createElement('button');
-      const statusBtnContent = document.createTextNode(book[bookKeys[j]]);
-      statusBtn.appendChild(statusBtnContent);
-      bookTitle.appendChild(statusBtn);
-      tableRow.appendChild(bookTitle);
-      statusBtn.id = `status-${index}`;
-      statusBtn.onclick = () => { book.changeBookStatus(index); };
-    } else {
-      const bookTitle = document.createElement('td');
-      const bookTitleContent = document.createTextNode(book[bookKeys[j]]);
-      bookTitle.appendChild(bookTitleContent);
-      tableRow.appendChild(bookTitle);
+  for(let book of myLibrary) {  
+    const bookKeys = Object.keys(book);
+    const tableRow = document.createElement('tr');
+    tableRow.classList = 'book-row';
+    for (let j = 0; j < bookKeys.length - 1; j += 1) {
+      const bookProperty = document.createElement('td');
+      const bookPropertyContent = document.createTextNode(book[bookKeys[j]]);
+      bookProperty.appendChild(bookPropertyContent);
+      tableRow.appendChild(bookProperty);
     }
-  }
+    const bookIndex = myLibrary.indexOf(book)
+    const bookStatus = document.createElement('td');
+    const statusBtn = document.createElement('button');
+    const statusBtnContent = document.createTextNode(book.read);
+    statusBtn.appendChild(statusBtnContent);
+    bookStatus.appendChild(statusBtn);
+    tableRow.appendChild(bookStatus);
+    statusBtn.id = `status-${bookIndex}`;
+    statusBtn.onclick = () => { book.changeBookStatus(); };
 
-  const deleteTd = document.createElement('td');
-  const deleteBtn = document.createElement('button');
-  deleteBtn.type = 'button';
-  deleteBtn.textContent = 'delete book';
-  deleteBtn.onclick = () => { deleteBook(index); };
-  deleteTd.appendChild(deleteBtn);
-  tableRow.appendChild(deleteTd);
-  tableRow.id = index;
-  bookCard.appendChild(tableRow);
+    const deleteTd = document.createElement('td');
+    const deleteBtn = document.createElement('button');
+    deleteBtn.type = 'button';
+    deleteBtn.textContent = 'delete book';
+    deleteBtn.onclick = () => { deleteBook(bookIndex); };
+    deleteTd.appendChild(deleteBtn);
+    tableRow.appendChild(deleteTd);
+    tableRow.id = bookIndex;
+    bookCard.appendChild(tableRow);
+  }
 }
 
 function addBookToLibrary() {
@@ -74,14 +75,12 @@ function addBookToLibrary() {
   const newBook = new Book(bookTitle, bookAuthor, bookPages, bookStatus);
 
   myLibrary.push(newBook);
-  displayBooks(myLibrary);
+  displayBooks();
 }
 
 
 const newBookBtn = document.querySelector('#new-book-btn');
-
 newBookBtn.onclick = () => { addBookToLibrary(); };
-
 const newBookForm = document.getElementById('new-book-form');
 const displayFormBtn = document.getElementById('display-form-btn');
 
