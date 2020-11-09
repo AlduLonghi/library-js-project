@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <table id="books-table">
+       <tr>
+           <th>Title</th>
+           <th>Author</th>
+           <th>Pages</th>
+           <th>Read?</th>
+           <th>Delete</th>
+       </tr>
+    </table>
+    
+    <button id="display-form-btn" type="button">Form</button>
+
+    <form id="new-book-form" >
+        <label for="title">Book Title</label>
+        <input type="text" id="title"><br>
+        <label for="author">Author</label>
+        <input type="text" id="author"><br>
+        <label for="pageNum">Number of pages</label>
+        <input type="text" id="pageNum"><br>
+        <input type="radio" id="haveRead" name="haveRead" value="true">Have read<br>
+        <input type="radio" id="notRead" name="haveRead" value="false" checked>Haven't read<br>
+
+        <button id="new-book-btn" type="button">Create a new book</button>
+    </form>
+
+<script src="main.js"></script>
+</body>
+</html>
